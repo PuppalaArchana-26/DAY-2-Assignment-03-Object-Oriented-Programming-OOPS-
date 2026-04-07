@@ -88,3 +88,13 @@ SO, in simple we can say it as which is easy to remember
 static → shared across everyone, 
 const → forever fixed, like stone, 
 readonly → set once when object is created, then can’t change
+
+
+**QUESTION 3  What does a constructor do?**
+
+Constructor: create instance; share the same name with the class
+A constructor is a special method in a class that runs automatically when an object is created and is used to initialize the object’s data.
+• Parameterless constructor: by default
+• Overloaded constructors
+• Static constructor: initializes static members of the type; parameterless
+
