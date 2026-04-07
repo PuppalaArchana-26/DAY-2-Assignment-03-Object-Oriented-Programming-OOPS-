@@ -605,7 +605,228 @@ CalculateIncome() is virtual in the base class
 Student and Instructor override it to provide their own behavior
 Polymorphism: same method (CalculateIncome) → different outputs depending on object type
 Polymorphism is achieved by using virtual methods in the base class and overriding them in derived classes to provide type-specific behavior.
-6.
+
+**6.**
+
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+// INTERFACES
+interface IPersonService
+{
+    int CalculateAge();
+    decimal CalculateSalary();
+    List<string> GetAddresses();
+}
+
+interface IStudentService : IPersonService
+{
+    double CalculateGPA();
+    void EnrollCourse(Course course, string grade);
+}
+
+interface IInstructorService : IPersonService
+{
+    decimal CalculateBonus();
+    int CalculateExperience(); // years since join date
+}
+
+interface ICourseService
+{
+    string CourseName { get; set; }
+    List<Student> EnrolledStudents { get; }
+    void EnrollStudent(Student student, string grade);
+}
+
+interface IDepartmentService
+{
+    string DepartmentName { get; set; }
+    Instructor Head { get; set; }
+    decimal Budget { get; set; }
+    List<Course> Courses { get; }
+}
+
+// ABSTRACT BASE CLASS
+abstract class Person : IPersonService
+{
+    public string Name { get; set; }
+    public DateTime DateOfBirth { get; set; }
+    private decimal salary;
+    private List<string> addresses = new List<string>();
+
+    public decimal Salary
+    {
+        get => salary;
+        set
+        {
+            if (value < 0) throw new Exception("Salary cannot be negative.");
+            salary = value;
+        }
+    }
+
+    public void AddAddress(string address) => addresses.Add(address);
+
+    public List<string> GetAddresses() => addresses;
+
+    public int CalculateAge()
+    {
+        var today = DateTime.Today;
+        int age = today.Year - DateOfBirth.Year;
+        if (DateOfBirth.Date > today.AddYears(-age)) age--;
+        return age;
+    }
+
+    public abstract decimal CalculateSalary();
+}
+
+// STUDENT CLASS
+class Student : Person, IStudentService
+{
+    private Dictionary<Course, string> courseGrades = new Dictionary<Course, string>();
+
+    public void EnrollCourse(Course course, string grade)
+    {
+        courseGrades[course] = grade.ToUpper();
+        course.EnrollStudent(this, grade);
+    }
+
+    public double CalculateGPA()
+    {
+        if (courseGrades.Count == 0) return 0.0;
+
+        double totalPoints = 0;
+        foreach (var grade in courseGrades.Values)
+        {
+            totalPoints += grade switch
+            {
+                "A" => 4,
+                "B" => 3,
+                "C" => 2,
+                "D" => 1,
+                "F" => 0,
+                _ => 0
+            };
+        }
+        return totalPoints / courseGrades.Count;
+    }
+
+    public override decimal CalculateSalary()
+    {
+        return 0; // students don't have salary
+    }
+}
+
+// INSTRUCTOR CLASS
+class Instructor : Person, IInstructorService
+{
+    public DateTime JoinDate { get; set; }
+    public Department Department { get; set; }
+
+    public override decimal CalculateSalary()
+    {
+        return Salary + CalculateBonus();
+    }
+
+    public decimal CalculateBonus()
+    {
+        int years = CalculateExperience();
+        return Salary * 0.05m * years; // 5% bonus per year of experience
+    }
+
+    public int CalculateExperience()
+    {
+        var today = DateTime.Today;
+        int years = today.Year - JoinDate.Year;
+        if (JoinDate.Date > today.AddYears(-years)) years--;
+        return years;
+    }
+}
+
+// COURSE CLASS
+class Course : ICourseService
+{
+    public string CourseName { get; set; }
+    public List<Student> EnrolledStudents { get; } = new List<Student>();
+    private Dictionary<Student, string> grades = new Dictionary<Student, string>();
+
+    public void EnrollStudent(Student student, string grade)
+    {
+        if (!EnrolledStudents.Contains(student))
+            EnrolledStudents.Add(student);
+        grades[student] = grade.ToUpper();
+    }
+
+    public string GetGrade(Student student)
+    {
+        return grades.ContainsKey(student) ? grades[student] : "N/A";
+    }
+}
+
+// DEPARTMENT CLASS
+class Department : IDepartmentService
+{
+    public string DepartmentName { get; set; }
+    public Instructor Head { get; set; }
+    public decimal Budget { get; set; }
+    public DateTime StartDate { get; set; }
+    public DateTime EndDate { get; set; }
+    public List<Course> Courses { get; } = new List<Course>();
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        // Create department
+        Department csDept = new Department
+        {
+            DepartmentName = "Computer Science",
+            Budget = 100000,
+            StartDate = new DateTime(2026, 1, 1),
+            EndDate = new DateTime(2026, 12, 31)
+        };
+
+        // Create instructor
+        Instructor instructor = new Instructor
+        {
+            Name = "John Smith",
+            DateOfBirth = new DateTime(1980, 5, 20),
+            Salary = 60000,
+            JoinDate = new DateTime(2015, 6, 1),
+            Department = csDept
+        };
+        csDept.Head = instructor;
+
+        // Create courses
+        Course cSharp = new Course { CourseName = "C# Basics" };
+        Course algorithms = new Course { CourseName = "Algorithms" };
+        csDept.Courses.Add(cSharp);
+        csDept.Courses.Add(algorithms);
+
+        // Create student
+        Student student = new Student
+        {
+            Name = "Archana",
+            DateOfBirth = new DateTime(2000, 3, 15)
+        };
+        student.EnrollCourse(cSharp, "A");
+        student.EnrollCourse(algorithms, "B");
+
+        // Display information
+        Console.WriteLine($"{instructor.Name}, Age: {instructor.CalculateAge()}, Total Salary: {instructor.CalculateSalary()}, Bonus: {instructor.CalculateBonus()}, Experience: {instructor.CalculateExperience()} years");
+
+        Console.WriteLine($"{student.Name}, Age: {student.CalculateAge()}, GPA: {student.CalculateGPA():0.00}");
+
+        Console.WriteLine($"Department: {csDept.DepartmentName}, Head: {csDept.Head.Name}, Budget: ${csDept.Budget}");
+        Console.WriteLine("Courses Offered:");
+        foreach (var course in csDept.Courses)
+        {
+            Console.WriteLine($" - {course.CourseName}, Enrolled Students: {course.EnrolledStudents.Count}");
+        }
+    }
+}
 
 
 
