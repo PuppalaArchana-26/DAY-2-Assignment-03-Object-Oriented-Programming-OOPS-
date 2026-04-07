@@ -1047,6 +1047,24 @@ Ball2: Thrown 3 times, then popped → cannot throw anymore → total 3
 Ball3: Thrown once, then again → total 2
 The Pop() method prevents further throws
 
+**Fields:** Variables declared inside a class to store data.
+
+**Access Modifiers:** Keywords (public, private, etc.) that control visibility of class members.
+
+**Enumeration Types (enum):** A named set of constant values.
+
+**Constructors:** Special methods used to initialize objects of a class.
+
+**Methods:** Functions defined in a class to perform actions or return values.
+
+**Properties**: Class members that provide controlled access to private fields.
+
+**Inheritance:** Mechanism where a class derives from another class to reuse code.
+
+**Interfaces:** Contracts that define methods/properties a class must implement.
+
+**Polymorphism:** Ability of objects to take many forms, allowing methods to behave differently in derived classes.
+
 
 
 
