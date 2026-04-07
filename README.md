@@ -85,6 +85,6 @@ Value can differ per object (unless combined with static)
 Useful when value is fixed for the lifetime of an object, but not known at compile time.
 SO, in simple we can say it as which is easy to remember
 
-static → shared across everyone
-const → forever fixed, like stone
+static → shared across everyone, 
+const → forever fixed, like stone, 
 readonly → set once when object is created, then can’t change
