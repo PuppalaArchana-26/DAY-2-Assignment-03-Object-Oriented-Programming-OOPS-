@@ -98,3 +98,79 @@ A constructor is a special method in a class that runs automatically when an obj
 • Overloaded constructors
 • Static constructor: initializes static members of the type; parameterless
 
+**QUESTION 4.Why is the partial keyword useful?**
+
+The partial keyword allows you to split a class, struct, or interface into multiple files, and the compiler combines them into one final class.
+
+partial is useful because it lets us to  break a big class into smaller files, so teams can work together easily and we can add our own code without touching automatically generated code.
+
+**QUESTION 5.What is a tuple?**
+
+A tuple is a lightweight container that can hold multiple values together, possibly of different types, without creating a separate class.
+
+**QUESTION 6. What does the C# record keyword do?**
+
+The C# record keyword creates a data-focused class that is immutable by default, compares objects by value instead of reference, and can be declared concisely in one line.
+
+
+**QUESTION 7.What does overloading and overriding mean?**
+
+**Method overriding**:
+
+• Methods in base class and its subclasses share the same method name and
+same input parameters
+• Keyword: Virtual / Abstract in base class methods; Override in derived
+class methods
+• Runtime polymorphism
+
+**Method overloading:**
+
+• Methods in same class share the same method name, but different input
+parameters
+• Compile time polymorphism
+
+**QUESTION 8.What is the difference between a field and a property?**
+
+A field is a variable inside a class, while a property is a controlled way to access a field, often with extra logic.
+
+**QUESTION 9.How do you make a method parameter optional?**
+
+An optional parameter is a method parameter that the caller can omit, and it will automatically use the default value you specify.
+
+**QUESTION 10. What is an interface and how is it different from abstract class?**
+
+Interface: A contract that defines what methods or properties a class must implement, but provides no implementation. A class can implement multiple interfaces.
+Abstract class: A partially built class that can have both implemented methods and abstract methods. A class can inherit only one abstract class.
+
+**QUESTION 11. What accessibility level are members of an interface?**
+
+Interface members are meant to be implemented by any class, so they must be accessible everywhere.
+You cannot use private, protected, or internal on interface methods, properties, or events.
+
+**QUESTION 12.True/False. Polymorphism allows derived classes to provide different implementations of the same method.** TRUE
+
+**QUESTION 13. True/False. The override keyword is used to indicate that a method in a derived class is providing its own implementation of a method.** TRUE
+
+**QUESTION 14. True/False. The new keyword is used to indicate that a method in a derived class is providing its own implementation of a method.** TRUE
+
+**QUESTION 15. True/False. Abstract methods can be used in a normal (non-abstract) class.** FALSE Because, abstract methods requires the class itself to be abstract.
+
+
+**QUESTION 16.True/False. Normal (non-abstract) methods can be used in an abstract class.** TRUE 
+
+**QUESTION 17. True/False.Derived classes can override methods that were virtual in the base class.** TRUE
+
+**QUESTION 18. True/False.Derived classes can override methods that were abstract in the base class.** TRUE
+
+**QUESTION 19. True/False.In a derived class, you can override a method that was neither virtual non abstract in the base class.** FALSE, Because Only virtual or abstract methods can be overridden.
+
+
+**QUESTION 20. True/False. A class that implements an interface does not have to provide an implementation for all of the members of the interface.** FALSE, Because A concrete class must implement all interface members.
+
+**QUESTION 21. True/False. A class that implements an interface is allowed to have other members that aren’t defined in the interface.** TRUE
+
+**QUESTION 22. True/False. A class can have more than one base class.**  FALSE C# supports single inheritance only.
+
+**QUESTION 23. True/False. A class can implement more than one interface.** TRUE
+
+
