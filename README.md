@@ -545,5 +545,67 @@ No need to rewrite the same code again → saves time and avoids duplication
 
 Inheritance is used when Student and Instructor reuse properties and methods from the Person class instead of rewriting them.
 
+**5.POLYMORPHISM**
+
+using System;
+
+// Base class (Abstraction + Inheritance + Polymorphism)
+class Person
+{
+    public string Name;
+
+    // Virtual method: can be overridden by derived classes
+    public virtual void CalculateIncome()
+    {
+        Console.WriteLine(Name + " has no income defined.");
+    }
+}
+
+// Derived class: Student
+class Student : Person
+{
+    public int Stipend; // Example: stipend for student
+
+    // Override method to provide specific behavior
+    public override void CalculateIncome()
+    {
+        Console.WriteLine(Name + " receives a stipend of $" + Stipend);
+    }
+}
+
+//Derived class: Instructor
+class Instructor : Person
+{
+    public double Salary;
+
+    // Override method to provide specific behavior
+    public override void CalculateIncome()
+    {
+        Console.WriteLine(Name + " earns a salary of $" + Salary);
+    }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        // Using Polymorphism
+        Person p1 = new Student { Name = "Archana", Stipend = 500 };
+        Person p2 = new Instructor { Name = "John", Salary = 60000 };
+
+        // Same method call, different behavior
+        p1.CalculateIncome(); // Student behavior
+        p2.CalculateIncome(); // Instructor behavior
+    }
+}
+
+**Explanation**
+
+CalculateIncome() is virtual in the base class
+Student and Instructor override it to provide their own behavior
+Polymorphism: same method (CalculateIncome) → different outputs depending on object type
+Polymorphism is achieved by using virtual methods in the base class and overriding them in derived classes to provide type-specific behavior.
+6.
+
 
 
