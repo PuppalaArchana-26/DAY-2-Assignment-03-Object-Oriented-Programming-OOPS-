@@ -344,3 +344,206 @@ Inheritance → Developer and Manager inherit from Employee
 
 Polymorphism → Work() behaves differently for each role
 
+**2.ABSTRACTION**
+
+using System;
+
+// ABSTRACTION (Base class)
+abstract class Person
+{
+    public string Name;
+
+    // Abstract method (must be implemented by child classes)
+    public abstract void PerformRole();
+}
+
+// Student class
+class Student : Person
+{
+    public override void PerformRole()
+    {
+        Console.WriteLine(Name + " is studying");
+    }
+}
+
+// Instructor class
+class Instructor : Person
+{
+    public override void PerformRole()
+    {
+        Console.WriteLine(Name + " is teaching");
+    }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Person p1 = new Student();
+        p1.Name = "Archana";
+
+        Person p2 = new Instructor();
+        p2.Name = "John";
+
+        p1.PerformRole(); // Student behavior
+        p2.PerformRole(); // Instructor behavior
+    }
+}
+
+Abstraction: Person is an abstract class that defines a common method PerformRole()
+Student & Instructor: Provide their own implementation of that method
+Same method → different behavior.
+
+Abstraction is used by creating a base class Person with an abstract method, and derived classes like Student and Instructor implement their own behavior.
+
+**3. ENCAPSULATION**
+
+using System;
+
+// ABSTRACTION
+abstract class Person
+{
+    // ENCAPSULATION (private fields)
+    private string name;
+
+    // Property to access private field
+    public string Name
+    {
+        get { return name; }
+        set
+        {
+            if (!string.IsNullOrEmpty(value))
+                name = value;
+        }
+    }
+
+    public abstract void PerformRole();
+}
+
+//  Student class
+class Student : Person
+{
+    private int marks; // encapsulated field
+
+    public int Marks
+    {
+        get { return marks; }
+        set
+        {
+            if (value >= 0 && value <= 100)
+                marks = value;
+        }
+    }
+
+    public override void PerformRole()
+    {
+        Console.WriteLine(Name + " is studying and scored " + Marks);
+    }
+}
+
+// Instructor class
+class Instructor : Person
+{
+    private double salary; // encapsulated field
+
+    public double Salary
+    {
+        get { return salary; }
+        set
+        {
+            if (value > 0)
+                salary = value;
+        }
+    }
+
+    public override void PerformRole()
+    {
+        Console.WriteLine(Name + " is teaching with salary " + Salary);
+    }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Student s = new Student();
+        s.Name = "Archana";
+        s.Marks = 90;
+
+        Instructor i = new Instructor();
+        i.Name = "John";
+        i.Salary = 50000;
+
+        s.PerformRole();
+        i.PerformRole();
+    }
+}
+
+**EXPLANATION**
+
+Data like name, marks, salary is kept private
+Access is given through public properties (get/set)
+Validation is added (e.g., marks between 0–100)
+Encapsulation is used by keeping fields private and accessing them through public properties with validation.
+
+**4.INHERITANCE**
+
+using System;
+
+// Base class (Parent)
+class Person
+{
+    public string Name;
+
+    public void Display()
+    {
+        Console.WriteLine("Name: " + Name);
+    }
+}
+
+// Derived class (Child)
+class Student : Person
+{
+    public void Study()
+    {
+        Console.WriteLine(Name + " is studying");
+    }
+}
+
+// Derived class (Child)
+class Instructor : Person
+{
+    public void Teach()
+    {
+        Console.WriteLine(Name + " is teaching");
+    }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Student s = new Student();
+        s.Name = "Archana";   // inherited property
+        s.Display();          // inherited method
+        s.Study();
+
+        Instructor i = new Instructor();
+        i.Name = "John";      // inherited property
+        i.Display();          // inherited method
+        i.Teach();
+    }
+}
+
+**Explanation**
+
+Student and Instructor inherit from Person
+They reuse:
+Name property
+Display() method
+No need to rewrite the same code again → saves time and avoids duplication 
+
+Inheritance is used when Student and Instructor reuse properties and methods from the Person class instead of rewriting them.
+
+
+
