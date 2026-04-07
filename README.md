@@ -828,5 +828,226 @@ class Program
     }
 }
 
+**Interfaces**
+
+IPersonService → common person methods
+IStudentService, IInstructorService inherit from IPersonService
+ICourseService → course operations
+IDepartmentService → department info
+
+**Abstraction**
+
+Person base class with abstract methods (CalculateSalary)
+
+**Encapsulation**
+
+Private fields for Salary, Marks, Addresses
+Public properties with validation
+
+**Inheritance**
+
+Student and Instructor inherit from Person
+
+**Polymorphism**
+
+CalculateSalary() is overridden in Student and Instructor
+
+**7.**
+
+using System;
+
+// Color Class
+class Color
+{
+    private int red;
+    private int green;
+    private int blue;
+    private int alpha;
+
+    // Constructor with all four values
+    public Color(int red, int green, int blue, int alpha)
+    {
+        this.Red = red;
+        this.Green = green;
+        this.Blue = blue;
+        this.Alpha = alpha;
+    }
+
+    // Constructor with RGB, alpha defaults to 255
+    public Color(int red, int green, int blue) : this(red, green, blue, 255) { }
+
+    // Properties with validation (0-255)
+    public int Red
+    {
+        get => red;
+        set => red = Clamp(value);
+    }
+
+    public int Green
+    {
+        get => green;
+        set => green = Clamp(value);
+    }
+
+    public int Blue
+    {
+        get => blue;
+        set => blue = Clamp(value);
+    }
+
+    public int Alpha
+    {
+        get => alpha;
+        set => alpha = Clamp(value);
+    }
+
+    // Helper method to clamp values between 0 and 255
+    private int Clamp(int value)
+    {
+        if (value < 0) return 0;
+        if (value > 255) return 255;
+        return value;
+    }
+
+    // Method to get grayscale value
+    public int GetGrayscale()
+    {
+        return (Red + Green + Blue) / 3;
+    }
+}
+
+// Ball Class
+class Ball
+{
+    public int Size { get; private set; }
+    public Color Color { get; private set; }
+    private int throwCount;
+
+    // Constructor
+    public Ball(int size, Color color)
+    {
+        this.Size = size;
+        this.Color = color;
+        this.throwCount = 0;
+    }
+
+    // Pop method
+    public void Pop()
+    {
+        Size = 0;
+    }
+
+    // Throw method
+    public void Throw()
+    {
+        if (Size > 0)
+            throwCount++;
+        else
+            Console.WriteLine("Cannot throw a popped ball!");
+    }
+
+    // Get number of times thrown
+    public int GetThrowCount()
+    {
+        return throwCount;
+    }
+}
+
+// Program to test the classes
+class Program
+{
+    static void Main(string[] args)
+    {
+        // Create a color (red = 100, green = 150, blue = 200)
+        Color myColor = new Color(100, 150, 200);
+
+        Console.WriteLine($"Grayscale of color: {myColor.GetGrayscale()}");
+
+        // Create a ball with size 10 and the color
+        Ball myBall = new Ball(10, myColor);
+
+        // Throw the ball 3 times
+        myBall.Throw();
+        myBall.Throw();
+        myBall.Throw();
+
+        Console.WriteLine($"Ball thrown {myBall.GetThrowCount()} times.");
+
+        // Pop the ball
+        myBall.Pop();
+        Console.WriteLine("Ball popped!");
+
+        // Try throwing again
+        myBall.Throw();
+        Console.WriteLine($"Ball thrown {myBall.GetThrowCount()} times after popping.");
+    }
+}
+
+**Color Class**
+
+Stores Red, Green, Blue, Alpha (0–255)
+Can create with RGB (alpha defaults to 255) or RGBA
+GetGrayscale() returns average of RGB values
+
+**Ball Class**
+
+Has Size, Color, and throwCount
+Pop() sets size to 0
+Throw() increments throwCount only if size > 0
+GetThrowCount() returns total throws
+
+Write some code in your Main method to create a few balls, throw them around a few
+times, pop a few, and try to throw them again, and print out the number of times that the
+balls have been thrown. (Popped balls shouldn’t have changed.)
+
+using System;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        // Create some colors
+        Color redColor = new Color(255, 0, 0);
+        Color greenColor = new Color(0, 255, 0);
+        Color blueColor = new Color(0, 0, 255);
+
+        // Create some balls
+        Ball ball1 = new Ball(10, redColor);
+        Ball ball2 = new Ball(15, greenColor);
+        Ball ball3 = new Ball(8, blueColor);
+
+        // Throw balls multiple times
+        ball1.Throw();
+        ball1.Throw();
+
+        ball2.Throw();
+        ball2.Throw();
+        ball2.Throw();
+
+        ball3.Throw();
+
+        // Pop ball2
+        ball2.Pop();
+        Console.WriteLine("Ball2 popped!");
+
+        // Try throwing all balls again
+        ball1.Throw(); // Should increment
+        ball2.Throw(); // Should NOT increment
+        ball3.Throw(); // Should increment
+
+        // Print out throw counts
+        Console.WriteLine($"Ball1 has been thrown {ball1.GetThrowCount()} times.");
+        Console.WriteLine($"Ball2 has been thrown {ball2.GetThrowCount()} times.");
+        Console.WriteLine($"Ball3 has been thrown {ball3.GetThrowCount()} times.");
+    }
+}
+
+Ball1: Thrown 2 times, then again after popping → total 3
+Ball2: Thrown 3 times, then popped → cannot throw anymore → total 3
+Ball3: Thrown once, then again → total 2
+The Pop() method prevents further throws
+
+
+
 
 
