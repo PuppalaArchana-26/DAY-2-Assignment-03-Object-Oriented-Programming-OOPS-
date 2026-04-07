@@ -173,4 +173,176 @@ You cannot use private, protected, or internal on interface methods, properties,
 
 **QUESTION 23. True/False. A class can implement more than one interface.** TRUE
 
+WORKING WITH METHODS
+**1.ARRAY**
+
+using System;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        // Generate an array of numbers (change length if you want)
+        int[] numbers = GenerateNumbers(10);
+
+        // Reverse the array
+        Reverse(numbers);
+
+        // Print the reversed array
+        PrintNumbers(numbers);
+    }
+
+    // Method to generate an array of numbers from 1 to 'length'
+    static int[] GenerateNumbers(int length)
+    {
+        int[] arr = new int[length];
+        for (int i = 0; i < length; i++)
+        {
+            arr[i] = i + 1; // Fill array with 1, 2, 3, ...
+        }
+        return arr;
+    }
+
+    // Method to reverse an array in place
+    static void Reverse(int[] arr)
+    {
+        int n = arr.Length;
+        for (int i = 0; i < n / 2; i++)
+        {
+            int temp = arr[i];
+            arr[i] = arr[n - i - 1];
+            arr[n - i - 1] = temp;
+        }
+    }
+
+    // Method to print the array
+    static void PrintNumbers(int[] arr)
+    {
+        foreach (int num in arr)
+        {
+            Console.Write(num + " ");
+        }
+        Console.WriteLine(); // For newline at the end
+    }
+}
+
+**2.FIBONACCI**
+
+
+using System;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Console.WriteLine("First 10 numbers of the Fibonacci sequence:");
+        for (int i = 1; i <= 10; i++)
+        {
+            Console.Write(Fibonacci(i) + " ");
+        }
+        Console.WriteLine();
+    }
+
+    // Recursive method to get the nth Fibonacci number
+    static int Fibonacci(int n)
+    {
+        // Base cases: 1st or 2nd number is 1
+        if (n == 1 || n == 2)
+            return 1;
+
+        // Recursive case: sum of previous two numbers
+        return Fibonacci(n - 1) + Fibonacci(n - 2);
+    }
+}
+
+
+
+using System;
+
+// 🔹 ABSTRACTION
+abstract class Employee
+{
+    public string Name;
+
+    // Abstract method
+    public abstract void Work();
+
+    // Normal method
+    public void Display()
+    {
+        Console.WriteLine("Employee Name: " + Name);
+    }
+}
+
+// 🔹 INHERITANCE + POLYMORPHISM
+class Developer : Employee
+{
+    public override void Work()
+    {
+        Console.WriteLine(Name + " is writing code");
+    }
+}
+
+class Manager : Employee
+{
+    public override void Work()
+    {
+        Console.WriteLine(Name + " is managing the team");
+    }
+}
+
+// 🔹 ENCAPSULATION
+class Student
+{
+    private int marks; // private field
+
+    public int Marks
+    {
+        get { return marks; }
+        set
+        {
+            if (value >= 0 && value <= 100)
+                marks = value;
+        }
+    }
+}
+
+
+Designing and Building Classes using object-oriented principles
+
+**1.**
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        // 🔹 ENCAPSULATION
+        Student s = new Student();
+        s.Marks = 85;
+        Console.WriteLine("Student Marks: " + s.Marks);
+
+        // 🔹 ABSTRACTION + INHERITANCE + POLYMORPHISM
+        Employee e1 = new Developer();
+        e1.Name = "Archana";
+
+        Employee e2 = new Manager();
+        e2.Name = "Ravi";
+
+        e1.Display();
+        e1.Work(); // Developer behavior
+
+        e2.Display();
+        e2.Work(); // Manager behavior
+    }
+}
+
+EXPLANATION 
+
+Abstraction → Employee defines common structure
+
+Encapsulation → Student protects marks using property
+
+Inheritance → Developer and Manager inherit from Employee
+
+Polymorphism → Work() behaves differently for each role
 
