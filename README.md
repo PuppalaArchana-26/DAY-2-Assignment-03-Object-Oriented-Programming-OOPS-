@@ -256,10 +256,13 @@ class Program
 }
 
 
+Designing and Building Classes using object-oriented principles
+
+**1.**
 
 using System;
 
-// 🔹 ABSTRACTION
+//  ABSTRACTION
 abstract class Employee
 {
     public string Name;
@@ -274,7 +277,7 @@ abstract class Employee
     }
 }
 
-// 🔹 INHERITANCE + POLYMORPHISM
+// INHERITANCE + POLYMORPHISM
 class Developer : Employee
 {
     public override void Work()
@@ -291,7 +294,7 @@ class Manager : Employee
     }
 }
 
-// 🔹 ENCAPSULATION
+// ENCAPSULATION
 class Student
 {
     private int marks; // private field
@@ -307,21 +310,16 @@ class Student
     }
 }
 
-
-Designing and Building Classes using object-oriented principles
-
-**1.**
-
 class Program
 {
     static void Main(string[] args)
     {
-        // 🔹 ENCAPSULATION
+        // ENCAPSULATION
         Student s = new Student();
         s.Marks = 85;
         Console.WriteLine("Student Marks: " + s.Marks);
 
-        // 🔹 ABSTRACTION + INHERITANCE + POLYMORPHISM
+        // ABSTRACTION + INHERITANCE + POLYMORPHISM
         Employee e1 = new Developer();
         e1.Name = "Archana";
 
